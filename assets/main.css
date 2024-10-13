@@ -1,0 +1,30 @@
+/* @import './base.css'; */
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #666; 
+  }
+  
+  /* Handle on hover 
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }*/
+

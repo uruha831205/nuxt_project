@@ -1,6 +1,8 @@
 <script setup></script>
 <template>
-  <h1>hello!!</h1>
-  <h1>this is index page!!</h1>
+  <div>
+    <h1>404</h1>
+    This page is no found!!
+  </div>
 </template>
 <style></style>
