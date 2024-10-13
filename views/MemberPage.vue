@@ -1,7 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import Timeline from "primevue/timeline";
-import CustomButton from "../components/Button.vue";
 import Selectbar from "@/components/SelectBar.vue";
 import axios from "axios";
 

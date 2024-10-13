@@ -126,9 +126,7 @@ function startLoading() {
     <button @click="get_kind_name">get_kind_name</button>
     <div>{{ result }}</div>
   </main>
-  <!-- <div v-if="loadingStatus" class="loading">
-    <h1>loading</h1>
-  </div> -->
+
   <template v-if="result != undefined">
     <div v-if="result.status == 200">Inert success!!</div>
     <div v-else>Something error!!</div>
