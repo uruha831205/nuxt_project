@@ -102,7 +102,10 @@ onMounted(() => {
         </div>
 
         <div class="d-flex align-items-center">
-          <button @click="toggleDarkMode()" class="me-4 fs-5 theme-btn">
+          <button
+            @click="toggleDarkMode()"
+            class="me-4 fs-5 theme-btn d-flex align-items-center justify-content-center"
+          >
             <template v-if="toggleStatus">
               <i class="bi bi-lightbulb-fill"></i>
             </template>
@@ -353,7 +356,7 @@ onMounted(() => {
   button,
   header,
   :is(header) div {
-    background-color: #444;
+    background-color: #444; /*444*/
   }
 
   nav,
