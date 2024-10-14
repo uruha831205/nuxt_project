@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import Aura from "@primevue/themes/aura";
+import PrimeVue from "primevue/config";
 import { definePreset } from "@primevue/themes";
 
 const Noir = definePreset(Aura, {
@@ -67,7 +68,10 @@ export default defineNuxtConfig({
   primevue: {
     options: {
         theme: {
-            preset: Noir
+            preset: Noir,
+            options: {
+              darkModeSelector: '.my-app-dark',
+            }
         }
     }
   },

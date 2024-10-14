@@ -18,6 +18,8 @@ const searchContent = ref("");
 const get_kind = ref();
 const loadingstatus = ref(true);
 
+const toogleStatus = ref(false);
+
 function clickToogle() {
   toogle.value = !toogle.value;
 }
@@ -54,6 +56,11 @@ const { data } = await useFetch(
 );
 get_kind.value = data.value;
 loadingstatus.value = false;
+
+function toggleDarkMode() {
+  document.documentElement.classList.toggle("my-app-dark");
+  toogleStatus.value = !toogleStatus.value;
+}
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
@@ -93,28 +100,40 @@ onMounted(() => {
             <i class="bi bi-search fs-4"></i>
           </button>
         </div>
-        <div class="d-flex" style="position: relative">
-          <!-- <NuxtLink
-            :to="`/${route_name}/member`"
-            class="fw-bloder fs-2 text-black me-4 member"
-            ><i class="bi bi-person-circle"></i
-          ></NuxtLink> -->
-          <span
-            v-if="all_ShoppingCart_products.length > 0"
-            class="bg-danger rounded"
-            style="
-              position: absolute;
-              top: 15%;
-              right: -10%;
-              width: 0.8rem;
-              height: 0.8rem;
-            "
-          ></span>
-          <i
-            class="bi bi-cart fs-2 member"
-            style="cursor: pointer"
-            @click.stop="toogleShoppingCart"
-          ></i>
+
+        <div class="d-flex align-items-center">
+          <button @click="toggleDarkMode()" class="me-4 fs-5 theme-btn">
+            <template v-if="toggleStatus">
+              <i class="bi bi-lightbulb-fill"></i>
+            </template>
+            <template v-else>
+              <i class="bi bi-lightbulb"></i>
+            </template>
+          </button>
+
+          <div class="d-flex" style="position: relative">
+            <!-- <NuxtLink
+              :to="`/${route_name}/member`"
+              class="fw-bloder fs-2 text-black me-4 member"
+              ><i class="bi bi-person-circle"></i
+            ></NuxtLink> -->
+            <span
+              v-if="all_ShoppingCart_products.length > 0"
+              class="bg-danger rounded"
+              style="
+                position: absolute;
+                top: 15%;
+                right: -10%;
+                width: 0.8rem;
+                height: 0.8rem;
+              "
+            ></span>
+            <i
+              class="bi bi-cart fs-2 member"
+              style="cursor: pointer"
+              @click.stop="toogleShoppingCart"
+            ></i>
+          </div>
         </div>
       </div>
     </header>
@@ -300,12 +319,16 @@ onMounted(() => {
 }
 
 @media (prefers-color-scheme: light) {
+  :root {
+    --theme-btn-hover-color: rgb(250, 250, 250);
+  }
+
   header {
     background-color: rgb(240, 240, 240);
   }
 
   nav {
-    background-color: rgb(170, 170, 170); /*rgb(170, 170, 170)*/
+    background-color: rgb(170, 170, 170);
   }
 
   button {
@@ -321,8 +344,49 @@ onMounted(() => {
   }
 }
 
+:root[class="my-app-dark"] {
+  :root {
+    --theme-btn-hover-color: rgb(255, 255, 255);
+  }
+
+  div,
+  button,
+  header,
+  :is(header) div {
+    background-color: #444;
+  }
+
+  nav,
+  :is(nav) div,
+  footer {
+    background-color: #333;
+  }
+
+  .theme-btn:hover {
+    background-color: rgb(141, 141, 141);
+  }
+
+  * {
+    color: #fff;
+  }
+}
+
 .layout {
   position: relative;
+}
+
+.theme-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 2.5rem;
+  border: none;
+  background-color: white;
+  transition: 0.3s;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 6px 3px;
+}
+
+.theme-btn:hover {
+  background-color: var(--theme-btn-hover-color);
 }
 
 .shoppingCart-mobile {
