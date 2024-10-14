@@ -127,7 +127,7 @@ function add_product_to_Cart(product) {
             <div>
               <a href="#">
                 <img
-                  src="@/assets/icon/IG.png"
+                  src="/icon/IG.png"
                   width="40rem"
                   class="rounded-pill me-3 mt-2"
                   alt=""
@@ -135,7 +135,7 @@ function add_product_to_Cart(product) {
               </a>
               <a href="#">
                 <img
-                  src="@/assets/icon/thread.png"
+                  src="/icon/thread.png"
                   width="40rem"
                   class="rounded-pill me-3 mt-2"
                   alt=""
@@ -143,7 +143,7 @@ function add_product_to_Cart(product) {
               </a>
               <a href="#">
                 <img
-                  src="@/assets/icon/FB.avif"
+                  src="/icon/FB.avif"
                   width="40rem"
                   class="rounded-pill mt-2"
                   alt=""

@@ -53,9 +53,9 @@ const guns = [
     <div class="item-layout">
       <div v-for="gun in guns" class="item-box">
         <div class="inner-item-box">
-          <router-link :to="'/' + gun.id" class="link">
+          <NuxtLink :to="'/' + gun.id" class="link">
             <img :src="gun.img" alt="product-img" />
-          </router-link>
+          </NuxtLink>
           <div class="description">
             <div>type : {{ gun.type }}</div>
             <div>name : {{ gun.name }}</div>
@@ -63,9 +63,9 @@ const guns = [
           </div>
         </div>
       </div>
-      <!-- <router-link v-for="number in numbers" :to="'/' + number">
+      <!-- <NuxtLink v-for="number in numbers" :to="'/' + number">
           <div class="box"></div>
-        </router-link> -->
+        </NuxtLink> -->
     </div>
   </div>
 </template>

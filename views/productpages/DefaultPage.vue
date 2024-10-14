@@ -1,6 +1,4 @@
 <script setup>
-import { useRoute } from "vue-router";
-import { computed, ref } from "vue";
 // import { Carousel } from "bootstrap";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -21,15 +19,16 @@ const get_route = useRoute();
 const gunshop = gun_shop();
 const { airsoft_datas, real_datas } = storeToRefs(gunshop);
 
-const airsoft = [
-  new URL("@/assets/img/airsoft_new/airsoft_new_1.jpg", import.meta.url),
-  new URL("@/assets/img/airsoft_new/airsoft_new_2.jpg", import.meta.url),
-  new URL("@/assets/img/airsoft_new/airsoft_new_3.jpg", import.meta.url),
-];
 const real = [
-  new URL("@/assets/img/real_new/real_new_1.jpg", import.meta.url),
-  new URL("@/assets/img/real_new/real_new_2.jpg", import.meta.url),
-  new URL("@/assets/img/real_new/real_new_3.jpg", import.meta.url),
+  "/img/real_new/real_new_1.jpg",
+  "/img/real_new/real_new_2.jpg",
+  "/img/real_new/real_new_3.jpg",
+];
+
+const airsoft = [
+  "/img/airsoft_new/airsoft_new_1.jpg",
+  "/img/airsoft_new/airsoft_new_2.jpg",
+  "/img/airsoft_new/airsoft_new_3.jpg",
 ];
 
 const currentIndex = ref(0);
@@ -64,6 +63,7 @@ const show_datas = computed(() => {
 <template>
   <main class="container-md">
     <!-- @slideChange="onSlideChange" -->
+
     <swiper
       :loop="true"
       :speed="1500"
@@ -91,10 +91,10 @@ const show_datas = computed(() => {
         />
       </swiper-slide>
       <div class="custom-prev">
-        <img src="@/assets/angle-left-solid.svg" alt="Previous" />
+        <img src="/chevron-left-solid.svg" alt="Previous" />
       </div>
       <div class="custom-next">
-        <img src="@/assets/angle-right-solid.svg" alt="Next" />
+        <img src="/chevron-right-solid.svg" alt="Next" />
       </div>
     </swiper>
 
@@ -107,12 +107,12 @@ const show_datas = computed(() => {
         >
           <div class="product w-100 h-100">
             <div class="new-tag">新品上市</div>
-            <router-link
+            <NuxtLink
               :to="`/${get_route.params.message}/${data.p_id}`"
               class="product-pic w-100"
             >
               <img :src="data.p_pic" alt="product_pic" class="pic w-100" />
-            </router-link>
+            </NuxtLink>
             <div class="product-info mt-2 w-100 straight-display">
               <div class="fw-bold fs-5 w-100">{{ data.p_name }}</div>
               <div class="w-100">

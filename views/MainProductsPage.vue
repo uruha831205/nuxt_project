@@ -68,8 +68,8 @@ onMounted(() => {
       <div
         class="container-md py-1 d-flex align-items-center justify-content-between"
       >
-        <router-link :to="`/${route_name}`" class="logo text-black"
-          ><div>Logo</div></router-link
+        <NuxtLink :to="`/${route_name}`" class="logo text-black"
+          ><div>Logo</div></NuxtLink
         >
         <div class="search-area" style="width: 60%">
           <input
@@ -89,11 +89,11 @@ onMounted(() => {
           </button>
         </div>
         <div class="d-flex" style="position: relative">
-          <!-- <router-link
+          <!-- <NuxtLink
             :to="`/${route_name}/member`"
             class="fw-bloder fs-2 text-black me-4 member"
             ><i class="bi bi-person-circle"></i
-          ></router-link> -->
+          ></NuxtLink> -->
           <span
             v-if="all_ShoppingCart_products.length > 0"
             class="bg-danger rounded"
@@ -117,7 +117,7 @@ onMounted(() => {
     <nav class="sticky-top">
       <div class="container-md custom-navbar py-2">
         <div class="link-bar" :class="{ show: toogle }">
-          <router-link
+          <NuxtLink
             :to="{
               name: 'search_product',
               query: { searchGroup: '長槍短槍', time: Date.now() },
@@ -125,9 +125,9 @@ onMounted(() => {
             @click="clickToogle"
             class="choose fw-bold fs-4"
             replace
-            >長槍短槍</router-link
+            >長槍短槍</NuxtLink
           >
-          <router-link
+          <NuxtLink
             :to="{
               name: 'search_product',
               query: { searchGroup: '內部零件', time: Date.now() },
@@ -135,9 +135,9 @@ onMounted(() => {
             @click="clickToogle"
             class="choose fw-bold fs-4"
             replace
-            >內部零件</router-link
+            >內部零件</NuxtLink
           >
-          <router-link
+          <NuxtLink
             :to="{
               name: 'search_product',
               query: { searchGroup: '外部配件', time: Date.now() },
@@ -145,9 +145,9 @@ onMounted(() => {
             @click="clickToogle"
             class="choose fw-bold fs-4"
             replace
-            >外部配件</router-link
+            >外部配件</NuxtLink
           >
-          <router-link
+          <NuxtLink
             :to="{
               name: 'search_product',
               query: { searchGroup: '人身裝備', time: Date.now() },
@@ -155,7 +155,7 @@ onMounted(() => {
             @click="clickToogle"
             class="choose fw-bold fs-4"
             replace
-            >人身裝備</router-link
+            >人身裝備</NuxtLink
           >
         </div>
 
@@ -185,8 +185,8 @@ onMounted(() => {
       </div>
     </nav>
 
-    <div class="router-view-area" style="flex: 1">
-      <router-view></router-view>
+    <div class="NuxtPage-area" style="flex: 1">
+      <NuxtPage></NuxtPage>
     </div>
 
     <footer class="d-flex justify-content-center">
@@ -217,7 +217,7 @@ onMounted(() => {
           <hr class="mt-1 mb-2" />
           <a href="#" class="text-decoration-none">
             <img
-              src="@/assets/icon/IG.png"
+              src="/icon/IG.png"
               width="40rem"
               class="rounded-pill me-3 mt-2"
               alt=""
@@ -226,7 +226,7 @@ onMounted(() => {
           <br />
           <a href="#" class="text-decoration-none">
             <img
-              src="@/assets/icon/FB.avif"
+              src="/icon/FB.avif"
               width="40rem"
               class="rounded-pill me-3 mt-2"
               alt=""
@@ -234,7 +234,7 @@ onMounted(() => {
           ><br />
           <a href="#" class="text-decoration-none">
             <img
-              src="@/assets/icon/thread.png"
+              src="/icon/thread.png"
               width="40rem"
               class="rounded-pill me-3 mt-2"
               alt=""
@@ -288,10 +288,10 @@ onMounted(() => {
     </div>
 
     <div class="member_shoppingCart_btn-mobile text-center fw-bold fs-5">
-      <router-link
+      <NuxtLink
         :to="`/${route_name}/member`"
         class="w-100 p-2 border-2 border-end border-dark text-dark text-decoration-none bg-gradient"
-        >會員中心</router-link
+        >會員中心</NuxtLink
       >
 
       <div class="w-100 p-2 bg-gradient" @click.stop="toogleShoppingCart">

@@ -132,7 +132,7 @@ onMounted(() => {
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-xs-1">
       <div v-for="(item, index) in show_items" :key="index" class="p-3">
         <div class="product-banner">
-          <router-link
+          <NuxtLink
             :to="`/${get_route.params.message}/${item.p_id}`"
             class="product-pic"
           >
@@ -142,7 +142,7 @@ onMounted(() => {
               :src="item.p_pic"
               alt="pic"
             />
-          </router-link>
+          </NuxtLink>
 
           <div class="product-info p-3">
             <div

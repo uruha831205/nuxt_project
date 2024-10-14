@@ -74,7 +74,4 @@ export default defineNuxtConfig({
   swiper: {
       modules: ['navigation', 'pagination', 'effect-creative' ,'autoplay']
   },
-
-
-
 })

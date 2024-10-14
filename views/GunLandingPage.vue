@@ -2,32 +2,32 @@
 
 <template>
   <main class="landingPage-layout">
-    <router-link class="box airsoft-gun" to="/airsoft">
+    <NuxtLink class="box airsoft-gun" to="/airsoft">
       <div class="pic airsoft-pic">
         <div class="description">
           <div class="title">生存遊戲</div>
           <div class="context">有價值的假日黃金戰士</div>
         </div>
       </div>
-    </router-link>
+    </NuxtLink>
 
-    <!-- <router-link class="box any" to="/any" @mouseenter="setBoxZindex('any')">
+    <!-- <NuxtLink class="box any" to="/any" @mouseenter="setBoxZindex('any')">
       <div class="pic any-pic">
         <div class="description">
           <div class="title">隨意逛逛</div>
           <div class="context">沒事，我自己逛逛就好</div>
         </div>
       </div>
-    </router-link> -->
+    </NuxtLink> -->
 
-    <router-link class="box real-gun" to="/real">
+    <NuxtLink class="box real-gun" to="/real">
       <div class="pic real-pic">
         <div class="description">
           <div class="title">真實槍枝</div>
           <div class="context">生命財產誠可貴，保重</div>
         </div>
       </div>
-    </router-link>
+    </NuxtLink>
   </main>
 </template>
 
@@ -93,14 +93,14 @@
 .airsoft-pic {
   width: 100%;
   height: 100%;
-  background: url("@/assets/img/bb_bullet.jpg");
+  background: url("/img/bb_bullet.jpg");
   background-size: cover;
 }
 
 .any-pic {
   width: 100%;
   height: 100%;
-  background: url("@/assets/img/dog.png");
+  background: url("/img/dog.png");
   background-position: center;
   background-size: cover;
   display: flex;
@@ -110,7 +110,7 @@
 .real-pic {
   width: 100%;
   height: 100%;
-  background: url("@/assets/img/real_bullet.jpeg");
+  background: url("/img/real_bullet.jpeg");
   background-position: right;
   background-size: cover;
   z-index: 1;
