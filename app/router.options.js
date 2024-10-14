@@ -19,28 +19,28 @@ export default {
       },
       children: [
         {
-          path: "/:message/",
+          path: "",
           name: "default",
           component: () => import("../views/productpages/DefaultPage.vue"),
         },
         {
-          path: "/:message/member",
+          path: "member",
           name: "member",
           component: () => import("../views/MemberPage.vue"),
         },
         {
-          path: "/:message/insertdata",
+          path: "insertdata",
           name: "insertdata",
           component: () => import("../views/InsertDataPage.vue"),
         },
         {
-          path: "/:message/showDataPage",
+          path: "showDataPage",
           name: "showDataPage",
           component: () => import("../views/ShowDataPage.vue"),
         },
         {
           // path: "/:message/:product_id(A\\d+|R\\d+)",
-          path: "/:message/:product_id",
+          path: ":product_id",
           name: "product_page",
           component: () => import("../views/productpages/Product.vue"),
           // beforeEnter: (to, from, next) => {
@@ -63,15 +63,20 @@ export default {
           // },
         },
         {
-          path: "/:message/product",
+          path: "product",
           name: "search_product",
           component: () => import("../views/productpages/ShowProductPage.vue"),
         },
       ],
     },
     {
-      path: "/:pathMatch(.*)*",
+      path: "/404",
       name: "404NotFound",
+      component: () => import("../views/404.vue"),
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "404NotFoundAll",
       component: () => import("../views/404.vue"),
     },
   ],

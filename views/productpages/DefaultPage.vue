@@ -50,14 +50,22 @@ const choose = computed(() => {
   return null;
 });
 
-const show_datas = computed(() => {
-  if (get_route.params.message == "airsoft") {
-    return airsoft_datas.value;
-  } else if (get_route.params.message == "real") {
-    return real_datas.value;
-  }
-  return null;
-});
+// const show_datas = computed(() => {
+//   if (get_route.params.message == "airsoft") {
+//     return airsoft_datas.value;
+//   } else if (get_route.params.message == "real") {
+//     return real_datas.value;
+//   }
+//   return null;
+// });
+
+const show_datas = ref([]);
+
+const { data } = await useFetch(
+  "http://apache.mahorsedomain.online/api/get_products",
+  { method: "Post", query: { p_class: get_route.params.message } }
+);
+show_datas.value = data.value;
 </script>
 
 <template>

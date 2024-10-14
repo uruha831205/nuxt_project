@@ -378,11 +378,14 @@ export const gun_shop = defineStore("gun_shop", () => {
   //     return son_kind_array;
   //   };
 
+  const kind_data = ref();
+
   return {
     all_ShoppingCart_products,
     add_products,
     // get_kindName_fromDB,
     // get_son_kindName_fromDB,
+    kind_data,
     guns,
     parts,
     components,

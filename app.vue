@@ -3,7 +3,7 @@ const number = ref(0);
 const route = useRoute();
 
 useHead({
-  title: "Hello Nuxt3",
+  title: "GunShop",
   link: [
     {
       rel: "stylesheet",

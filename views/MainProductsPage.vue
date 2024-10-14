@@ -1,17 +1,11 @@
 <script setup>
-import { useRoute, useRouter } from "vue-router";
-import { onMounted, ref } from "vue";
 import ShoppingCartList from "@/components/ShoppingCartList.vue";
+import Loading from "~/components/Loading.vue";
 
 import { storeToRefs } from "pinia";
 import { gun_shop } from "@/stores/usePinia.js";
 const gunshop = gun_shop();
-const { all_ShoppingCart_products } = storeToRefs(gunshop);
-
-function read_ShoppingCart() {
-  all_ShoppingCart_products.value =
-    JSON.parse(localStorage.getItem("all_shopping_cart_products")) || [];
-}
+const { all_ShoppingCart_products, kind_data } = storeToRefs(gunshop);
 
 const get_route = useRoute();
 const get_router = useRouter();
@@ -20,6 +14,9 @@ const toogle = ref(false);
 const isOpen = ref(false);
 const gotTopubttonisShow = ref(false);
 const searchContent = ref("");
+
+const get_kind = ref();
+const loadingstatus = ref(true);
 
 function clickToogle() {
   toogle.value = !toogle.value;
@@ -47,9 +44,16 @@ function handleScroll() {
   gotTopubttonisShow.value = window.scrollY >= 500;
 }
 
-if (!["airsoft", "real", "member"].includes(route_name)) {
-  get_router.replace("/404");
+function read_ShoppingCart() {
+  all_ShoppingCart_products.value =
+    JSON.parse(localStorage.getItem("all_shopping_cart_products")) || [];
 }
+
+const { data } = await useFetch(
+  "http://apache.mahorsedomain.online/api/get_kind_name"
+);
+get_kind.value = data.value;
+loadingstatus.value = false;
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
@@ -62,6 +66,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <Loading :loadingStatus="loadingstatus"></Loading>
   <!-- style="display: flex; flex-direction: column; min-height: 100vh; overflow: auto" -->
   <div style="display: flex; flex-direction: column; min-height: 100vh">
     <header class="m-0 p-0">
@@ -117,46 +122,19 @@ onMounted(() => {
     <nav class="sticky-top">
       <div class="container-md custom-navbar py-2">
         <div class="link-bar" :class="{ show: toogle }">
-          <NuxtLink
-            :to="{
-              name: 'search_product',
-              query: { searchGroup: '長槍短槍', time: Date.now() },
-            }"
-            @click="clickToogle"
-            class="choose fw-bold fs-4"
-            replace
-            >長槍短槍</NuxtLink
-          >
-          <NuxtLink
-            :to="{
-              name: 'search_product',
-              query: { searchGroup: '內部零件', time: Date.now() },
-            }"
-            @click="clickToogle"
-            class="choose fw-bold fs-4"
-            replace
-            >內部零件</NuxtLink
-          >
-          <NuxtLink
-            :to="{
-              name: 'search_product',
-              query: { searchGroup: '外部配件', time: Date.now() },
-            }"
-            @click="clickToogle"
-            class="choose fw-bold fs-4"
-            replace
-            >外部配件</NuxtLink
-          >
-          <NuxtLink
-            :to="{
-              name: 'search_product',
-              query: { searchGroup: '人身裝備', time: Date.now() },
-            }"
-            @click="clickToogle"
-            class="choose fw-bold fs-4"
-            replace
-            >人身裝備</NuxtLink
-          >
+          <template v-if="get_kind">
+            <NuxtLink
+              v-for="item in get_kind"
+              :to="{
+                name: 'search_product',
+                query: { searchGroup: `${item.p_kind_name}`, time: Date.now() },
+              }"
+              @click="clickToogle"
+              class="choose fw-bold fs-4"
+              replace
+              >{{ item.p_kind_name }}</NuxtLink
+            >
+          </template>
         </div>
 
         <div class="search-bar d-flex">
@@ -194,15 +172,15 @@ onMounted(() => {
         <section class="mb-5">
           顧客服務
           <hr class="mt-1 mb-2" />
-          <div class="mb-3">
+          <p class="mb-3">
             <a href="#" class="text-decoration-none">會員中心</a>
-          </div>
-          <div class="mb-3">
+          </p>
+          <p class="mb-3">
             <a href="#" class="text-decoration-none">買貴通報</a>
-          </div>
-          <div class="mb-3">
+          </p>
+          <p class="mb-3">
             <a href="#" class="text-decoration-none">購物說明</a>
-          </div>
+          </p>
         </section>
         <section class="mb-5">
           門市營業時間
