@@ -302,7 +302,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-@media (prefers-color-scheme: dark) {
+/*@media (prefers-color-scheme: dark) {
   div,
   button,
   header,
@@ -319,7 +319,7 @@ onMounted(() => {
   * {
     color: #fff;
   }
-}
+}*/
 
 @media (prefers-color-scheme: light) {
   :root {
