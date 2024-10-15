@@ -62,9 +62,10 @@ const choose = computed(() => {
 const show_datas = ref([]);
 
 const { data } = await useFetch(
-  "http://apache.mahorsedomain.online/api/get_products",
+  "https://apachema.mahorsedomain.online/api/get_products",
   { method: "Post", query: { p_class: get_route.params.message } }
 );
+console.log(data.value);
 show_datas.value = data.value;
 </script>
 

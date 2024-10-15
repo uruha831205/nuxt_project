@@ -18,7 +18,7 @@ const searchContent = ref("");
 const get_kind = ref();
 const loadingstatus = ref(true);
 
-const toogleStatus = ref(false);
+const toggleStatus = ref(false);
 
 function clickToogle() {
   toogle.value = !toogle.value;
@@ -52,14 +52,15 @@ function read_ShoppingCart() {
 }
 
 const { data } = await useFetch(
-  "http://apache.mahorsedomain.online/api/get_kind_name"
+  "https://apachema.mahorsedomain.online/api/get_kind_name"
 );
+console.log(data.value);
 get_kind.value = data.value;
 loadingstatus.value = false;
 
 function toggleDarkMode() {
   document.documentElement.classList.toggle("my-app-dark");
-  toogleStatus.value = !toogleStatus.value;
+  toggleStatus.value = !toggleStatus.value;
 }
 
 onMounted(() => {
