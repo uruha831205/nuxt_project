@@ -303,8 +303,11 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/*@media (prefers-color-scheme: dark) {
-  div,
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light;
+  }
+  /*div,
   button,
   header,
   :is(header) div {
@@ -319,10 +322,30 @@ onMounted(() => {
 
   * {
     color: #fff;
-  }
-}*/
+  }*/
+}
 
-@media (prefers-color-scheme: light) {
+header {
+  background-color: rgb(240, 240, 240);
+}
+
+nav {
+  background-color: rgb(170, 170, 170);
+}
+
+button {
+  background-color: white;
+}
+
+footer {
+  background-color: rgb(170, 170, 170);
+}
+
+* {
+  color: #000;
+}
+
+/*@media (prefers-color-scheme: light) {
   :root {
     --theme-btn-hover-color: rgb(250, 250, 250);
   }
@@ -346,7 +369,7 @@ onMounted(() => {
   * {
     color: #000;
   }
-}
+}*/
 
 :root[class="my-app-dark"] {
   :root {

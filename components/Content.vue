@@ -169,7 +169,19 @@ onMounted(() => {
 </template>
 
 <style scoped>
+/*
 @media (prefers-color-scheme: dark) {
+  .product-banner {
+    background-color: #333;
+  }
+}
+*/
+
+.product-banner {
+  background-color: #ffffff;
+}
+
+:root[class="my-app-dark"] {
   .product-banner {
     background-color: #333;
   }

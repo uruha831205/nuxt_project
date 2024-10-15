@@ -78,4 +78,9 @@ export default defineNuxtConfig({
   swiper: {
       modules: ['navigation', 'pagination', 'effect-creative' ,'autoplay']
   },
+  devServer: {
+    host: '0.0.0.0', // 绑定到所有 IP 地址
+    port: 3000, // 你可以设置任何端口
+  }
+
 })
