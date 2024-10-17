@@ -54,17 +54,17 @@ function save_all_ShoppingCart_products_in_localStorage() {
 <template>
   <!-- :class="{ 'bg-secondary': props.setBackColorGray }" -->
   <div class="layout" :class="{ 'bg-secondary': props.setBackColorGray }">
-    <div class="p-2 overflow-auto" style="scrollbar-width: thin">
+    <div class="overflow-auto" style="scrollbar-width: thin">
       <div v-if="all_ShoppingCart_products.length == 0">目前是空的</div>
       <div
         v-for="(product, index) in all_ShoppingCart_products"
         :key="index"
-        class="row mb-2 align-items-center m-0"
+        class="row mb-1 align-items-center m-0"
       >
         <img
           :src="product.product.p_pic"
           alt=""
-          class="col-4 col-sm-3"
+          class="col-4 col-sm-3 p-1"
           height="90rem"
           style="object-fit: contain"
         />
@@ -76,10 +76,10 @@ function save_all_ShoppingCart_products_in_localStorage() {
             {{ product.product.p_name }}
           </div>
           <div class="row">
-            <div class="col-4 col-sm-5 fw-bold">
+            <div class="col-5 col-sm-5 fw-bold">
               ${{ product.product.p_price * product.quantity }}
             </div>
-            <div class="col-8 col-sm-7 d-flex justify-content-around">
+            <div class="col-7 col-sm-7 d-flex justify-content-around">
               <button
                 class="fw-bold shoppingCartPorduct-btn"
                 @click="reduce_quantuty(product)"
@@ -130,8 +130,9 @@ function save_all_ShoppingCart_products_in_localStorage() {
 .shoppingCartPorduct-btn {
   user-select: none;
   border-radius: 5px;
-  width: 20%;
+  width: 25%;
   cursor: pointer;
+  text-align: center;
 }
 
 .shoppingCartList-btn {
