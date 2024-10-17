@@ -34,6 +34,12 @@ export default {
           component: () => import("../views/InsertDataPage.vue"),
         },
         {
+          path: "InsertSonKindPage",
+          name: "InsertSonKindPage",
+          component: () => import("../views/InsertSonKindPage.vue"),
+        },
+
+        {
           path: "showDataPage",
           name: "showDataPage",
           component: () => import("../views/ShowDataPage.vue"),

@@ -22,12 +22,13 @@ watch(dropdownState, () => {
 
 watch(selectAll, () => {
   if (selectAll.value) {
-    checkedItems.value = Props.selectItems.value.map((item) => item.name);
+    //checkedItems.value = Props.selectItems.value.map((item) => item);
+    checkedItems.value = Props.selectItems;
     dropdownState.value = selectAll.value;
   } else if (
     !(
       checkedItems.value.length > 0 &&
-      checkedItems.value.length < Props.selectItems.value.length
+      checkedItems.value.length < Props.selectItems.length
     )
   ) {
     checkedItems.value = [];
@@ -35,9 +36,9 @@ watch(selectAll, () => {
 });
 
 watch(checkedItems, () => {
-  if (checkedItems.value.length == Props.selectItems.value.length) {
+  if (checkedItems.value.length == Props.selectItems.length) {
     selectAll.value = true;
-  } else if (checkedItems.value.length < Props.selectItems.value.length) {
+  } else if (checkedItems.value.length < Props.selectItems.length) {
     selectAll.value = false;
     if (checkedItems.value.length == 0) {
       dropdownState.value = false;
@@ -62,15 +63,15 @@ watch(checkedItems, () => {
     </div>
   </div>
   <ul ref="select_items_CSS" class="select-items">
-    <li v-for="item in Props.selectItems.value">
+    <li v-for="item in Props.selectItems">
       <input
         class="me-1"
         type="checkbox"
-        :id="item.name"
-        :value="item.name"
+        :id="item"
+        :value="item"
         v-model="checkedItems"
       />
-      <label :for="item.name">{{ item.name }}</label>
+      <label :for="item">{{ item }}</label>
     </li>
   </ul>
 </template>

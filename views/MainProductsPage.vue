@@ -5,7 +5,7 @@ import Loading from "~/components/Loading.vue";
 import { storeToRefs } from "pinia";
 import { gun_shop } from "@/stores/usePinia.js";
 const gunshop = gun_shop();
-const { all_ShoppingCart_products, kind_data } = storeToRefs(gunshop);
+const { all_ShoppingCart_products } = storeToRefs(gunshop);
 
 const get_route = useRoute();
 const get_router = useRouter();
@@ -54,7 +54,6 @@ function read_ShoppingCart() {
 const { data } = await useFetch(
   "https://apachema.mahorsedomain.online/api/get_kind_name"
 );
-console.log(data.value);
 get_kind.value = data.value;
 loadingstatus.value = false;
 
@@ -75,7 +74,6 @@ onMounted(() => {
 
 <template>
   <Loading :loadingStatus="loadingstatus"></Loading>
-  <!-- style="display: flex; flex-direction: column; min-height: 100vh; overflow: auto" -->
   <div style="display: flex; flex-direction: column; min-height: 100vh">
     <header class="m-0 p-0">
       <div
@@ -84,7 +82,11 @@ onMounted(() => {
         <NuxtLink :to="`/${route_name}`" class="logo text-black"
           ><div>Logo</div></NuxtLink
         >
-        <div class="search-area" style="width: 60%">
+        <form
+          class="search-area"
+          style="width: 60%"
+          @submit.prevent="startSearch"
+        >
           <input
             type="text"
             class="search-text px-4"
@@ -93,14 +95,10 @@ onMounted(() => {
             v-model="searchContent"
             @keyup.enter="startSearch"
           />
-          <button
-            type="submit"
-            class="search-btn px-2 bg-gradient"
-            @click="startSearch"
-          >
+          <button type="submit" class="search-btn px-2 bg-gradient">
             <i class="bi bi-search fs-4"></i>
           </button>
-        </div>
+        </form>
 
         <div class="d-flex align-items-center">
           <button
@@ -164,21 +162,17 @@ onMounted(() => {
           <div class="toggle-area me-1 display-3" @click="clickToogle()">
             <i class="bi bi-list"></i>
           </div>
-          <div class="search-area w-100">
+          <form class="search-area w-100" @submit.prevent="startSearch">
             <input
               type="text"
               class="search-text px-4"
               placeholder="HK416  戰術手套"
               v-model="searchContent"
             />
-            <button
-              type="submit"
-              class="search-btn px-2 bg-gradient"
-              @click="startSearch"
-            >
+            <button type="submit" class="search-btn px-2 bg-gradient">
               <i class="bi bi-search fs-4"></i>
             </button>
-          </div>
+          </form>
         </div>
       </div>
       <div class="run-horse-bar bg-gradient">

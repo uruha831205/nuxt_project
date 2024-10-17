@@ -155,7 +155,7 @@ export const gun_shop = defineStore("gun_shop", () => {
 
   const real_datas = shallowRef([
     {
-      p_id: "001",
+      p_id: "48",
       p_name: "AK-47",
       p_brand: "Kalashnikov",
       p_kind: "長槍短槍",
@@ -239,7 +239,7 @@ export const gun_shop = defineStore("gun_shop", () => {
           Tactec戰術背心內部為考量使用舒適度，正反面皆有透氣網格襯墊，在雙肩更是特別加厚達到有效減壓效果。`,
     },
     {
-      p_id: "005",
+      p_id: "52",
       p_name: "AK-47S ",
       p_brand: "Kalashnikov",
       p_kind: "長槍短槍",
@@ -360,6 +360,15 @@ export const gun_shop = defineStore("gun_shop", () => {
     }
   };
 
+  async function get_class_data(className) {
+    const data = await $fetch(
+      "https://apachema.mahorsedomain.online/api/get_products",
+      { method: "Post", query: { p_class: className } }
+    );
+    console.log(data);
+    return data;
+  }
+
   //   // 從資料庫撈資料
   //   const get_kindName_fromDB = async () => {
   //     return await axios.get("api/get_kind_name");
@@ -378,14 +387,12 @@ export const gun_shop = defineStore("gun_shop", () => {
   //     return son_kind_array;
   //   };
 
-  const kind_data = ref();
-
   return {
     all_ShoppingCart_products,
     add_products,
     // get_kindName_fromDB,
     // get_son_kindName_fromDB,
-    kind_data,
+    get_class_data,
     guns,
     parts,
     components,

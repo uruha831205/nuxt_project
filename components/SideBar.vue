@@ -9,9 +9,35 @@ const get_route = useRoute();
 const gunshop = gun_shop();
 const { guns, parts, components, equipments } = storeToRefs(gunshop);
 
+//const show_products = [guns, parts, components, equipments];
+//const select_bar_name = ["長槍短槍", "內部零件", "外部配件", "人身裝備"];
+
+const get_kind_name = ref();
+const get_son_kind_name = ref([]);
 const siderSelected = ref([[], [], [], []]);
-const show_products = [guns, parts, components, equipments];
-const select_bar_name = ["長槍短槍", "內部零件", "外部配件", "人身裝備"];
+
+//取得titleName
+const get_kind_name_DB = await useFetch(
+  "https://apachema.mahorsedomain.online/api/get_kind_name"
+);
+get_kind_name.value = get_kind_name_DB.data.value.map(
+  (item) => item.p_kind_name
+);
+
+//取得selectName;
+const get_son_kind_name_DB = get_kind_name.value.map(async (kind) => {
+  const data = await useFetch(
+    "https://apachema.mahorsedomain.online/api/get_son_kind_name",
+    {
+      method: "POST",
+      query: { p_kind: kind },
+    }
+  );
+  data.data = data.data.value.map((item) => item.p_son_kind_name);
+  return data.data;
+});
+
+get_son_kind_name.value = await Promise.all(get_son_kind_name_DB);
 
 const Props = defineProps([
   "searchContent",
@@ -26,7 +52,7 @@ function search() {
       searchContent: Props.searchContent,
       searchGroup: Props.searchGroup,
       getsiderBarSearch: siderSelected.value,
-      //sideBar_time: Date.now(),
+      sideBar_time: Date.now(),
     },
   });
 }
@@ -56,13 +82,13 @@ onMounted(() => {
   <form @submit.prevent="search">
     <div
       class="select-bar"
-      v-for="(_, index) in show_products.length"
+      v-for="(_, index) in get_kind_name.length"
       :key="index"
     >
       <Selectbar
         v-model="siderSelected[index]"
-        :titleItem="select_bar_name[index]"
-        :selectItems="show_products[index]"
+        :titleItem="get_kind_name[index]"
+        :selectItems="get_son_kind_name[index]"
       ></Selectbar>
       <hr />
     </div>

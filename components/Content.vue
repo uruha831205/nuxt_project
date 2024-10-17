@@ -1,15 +1,9 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { gun_shop } from "@/stores/usePinia.js";
-import { ref, onMounted, shallowRef, watch } from "vue";
+import { ref, shallowRef, watch } from "vue";
 import { useRoute } from "vue-router";
 const get_route = useRoute();
-
-const gunShop = gun_shop();
-const { all_ShoppingCart_products, airsoft_datas, real_datas } =
-  storeToRefs(gunShop);
-
-const siderSelected = ref([[], [], [], []]);
 
 const Props = defineProps([
   "searchGroup",
@@ -17,10 +11,13 @@ const Props = defineProps([
   "getsiderBarSearch",
 ]);
 
-const choose_items = shallowRef();
-const search_items = shallowRef();
-const search_detailed_items = shallowRef();
-const show_items = shallowRef();
+const gunShop = gun_shop();
+const { all_ShoppingCart_products } = storeToRefs(gunShop);
+
+const siderSelected = ref([[], [], [], []]);
+const search_detailed_items = ref();
+const show_items = ref();
+const loadingStatus = ref(false);
 
 function add_product_to_Cart(product) {
   gunShop.add_products(product);
@@ -30,52 +27,53 @@ function add_product_to_Cart(product) {
   );
 }
 
-function selectDatas() {
-  choose_items.value =
-    get_route.params.message == "airsoft"
-      ? airsoft_datas.value
-      : real_datas.value;
-}
-
-function serachByName(name) {
-  selectDatas();
-  search_items.value = choose_items.value.filter((products) =>
-    products.p_name.toLowerCase().includes(name.toLowerCase())
+async function serachByName(name) {
+  const { data } = await useFetch(
+    "https://apachema.mahorsedomain.online/api/get_products_by_name",
+    {
+      method: "POST",
+      query: { p_class: get_route.params.message, p_name: name },
+    }
   );
-  show_items.value = search_items.value;
+  show_items.value = data.value;
 }
 
-function serachByKind(kind) {
-  selectDatas();
-  search_items.value = choose_items.value.filter(
-    (products) => products.p_kind === kind
+async function serachByKind(kind) {
+  const { data } = await useFetch(
+    "https://apachema.mahorsedomain.online/api/get_products_by_kind",
+    {
+      method: "POST",
+      query: { p_class: get_route.params.message, p_kind: kind },
+    }
   );
-  show_items.value = search_items.value;
+  show_items.value = data.value;
 }
 
-function serachByDetailed() {
+async function serachByDetailed() {
+  loadingStatus.value = !loadingStatus.value;
   if (siderSelected.value.every((innerArray) => innerArray.length === 0)) {
-    show_items.value = search_items.value;
+    checkToSearch();
+    loadingStatus.value = !loadingStatus.value;
     return;
   }
 
-  search_detailed_items.value = [];
-  search_items.value.forEach((item) => {
-    if (
-      siderSelected.value.find((detailed) => detailed.includes(item.p_son_kind))
-    ) {
-      search_detailed_items.value.push(item);
+  search_detailed_items.value = []; //觀測用
+  const rtn_data = await $fetch(
+    "https://apachema.mahorsedomain.online/api/test_check",
+    {
+      method: "Post",
+      body: {
+        p_class: get_route.params.message,
+        p_son_kind: siderSelected.value,
+      },
     }
-  });
-  show_items.value = search_detailed_items.value;
+  );
+  search_detailed_items.value = rtn_data;
+  show_items.value = rtn_data;
+  loadingStatus.value = !loadingStatus.value;
 }
 
 function checkToSearch() {
-  // if ("searchContent" in get_route.query) {
-  //   serachByName(get_route.query.searchContent);
-  // } else if ("searchGroup" in get_route.query) {
-  //   serachByKind(get_route.query.searchGroup);
-  // }
   if (Props.searchContent != undefined) {
     serachByName(Props.searchContent);
   } else if (Props.searchGroup != undefined) {
@@ -114,15 +112,13 @@ watch(
   }
 );
 
-//BUG
+//BUG?
 watch(siderSelected, () => {
   serachByDetailed();
 });
 
-onMounted(() => {
-  checkToSearch();
-  split_sideBar_data();
-});
+checkToSearch();
+split_sideBar_data();
 </script>
 
 <template>
@@ -133,7 +129,7 @@ onMounted(() => {
       <div v-for="(item, index) in show_items" :key="index" class="p-3">
         <div class="product-banner">
           <NuxtLink
-            :to="`/${get_route.params.message}/${item.p_id}`"
+            :to="`/${get_route.params.message}/${item.id}`"
             class="product-pic"
           >
             <img

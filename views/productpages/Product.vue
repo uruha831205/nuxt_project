@@ -31,11 +31,61 @@ const gunshop = gun_shop();
 const { airsoft_datas, real_datas, all_ShoppingCart_products } =
   storeToRefs(gunshop);
 
-const choose_data =
-  get_route.params.message === "airsoft" ? airsoft_datas : real_datas;
-const select_data = choose_data.value.find(
-  (product) => product.p_id === get_route.params.product_id
+// const choose_data =
+//   get_route.params.message === "airsoft" ? airsoft_datas : real_datas;
+// const select_data = choose_data.value.find(
+//   (product) => product.p_id === get_route.params.product_id
+// );
+
+console.log("get_route.params.message :", get_route.params.message);
+console.log("get_route.params.product_id :", get_route.params.product_id);
+
+console.log("start to get DB data!!");
+
+const { data: select_data } = await useFetch(
+  "https://apachema.mahorsedomain.online/api/get_one_products",
+  {
+    method: "POST",
+    query: {
+      p_class: get_route.params.message,
+      p_id: get_route.params.product_id,
+    },
+  }
 );
+
+select_data.value = select_data.value[0];
+
+const { data: other_pics } = await useFetch(
+  "https://apachema.mahorsedomain.online/api/get_one_products_other_pics",
+  {
+    method: "POST",
+    query: {
+      p_id: get_route.params.product_id,
+    },
+  }
+);
+
+other_pics.value = other_pics.value;
+
+// const { data } = await useAsyncData("getOneProduct", () => {
+//   const product = $fetch(
+//     "https://apachema.mahorsedomain.online/api/get_one_products",
+//     {
+//       method: "POST",
+//       body: {
+//         p_class: get_route.params.message,
+//         p_id: get_route.params.product_id,
+//       },
+//     }
+//   );
+
+//   return product;
+// });
+
+//select_data.value = data.value[0];
+// console.log("pics", select_data.value.p_other_pics);
+// select_data.value.p_other_pics = select_data.value.p_other_pics.split(",");
+// console.log("!!", select_data.value.p_other_pics);
 
 function add_product_to_Cart(product) {
   gunshop.add_products(product);
@@ -58,12 +108,12 @@ function add_product_to_Cart(product) {
             @slide-Change="onSlideChange"
           >
             <swiper-slide
-              v-for="(product, index) in select_data.p_other_pics"
+              v-for="(product, index) in other_pics"
               :key="index"
               class="d-flex justify-content-center"
             >
               <img
-                :src="product"
+                :src="product.p_other_pics"
                 style="object-fit: contain; cursor: pointer; width: 70%"
                 alt="Product image "
               />
@@ -77,12 +127,9 @@ function add_product_to_Cart(product) {
             :space-between="10"
             :watch-slides-progress="true"
           >
-            <swiper-slide
-              v-for="(product, index) in select_data.p_other_pics"
-              :key="index"
-            >
+            <swiper-slide v-for="(product, index) in other_pics" :key="index">
               <img
-                :src="product"
+                :src="product.p_other_pics"
                 style="object-fit: cover; cursor: pointer; border-radius: 15px"
                 class="w-100 thumbs-img"
                 :class="{ 'active-thumb': currentThumbIndex === index }"
@@ -94,7 +141,7 @@ function add_product_to_Cart(product) {
 
         <div class="col-12 col-lg-4 offset-lg-1 py-4">
           <h5 class="mb-2 fw-bold" style="color: rgba(150, 150, 150)">
-            {{ select_data.p_son_kind }} {{ select_data.p_brand }}
+            {{ select_data.p_son_kind_name }} {{ select_data.p_brand_name }}
           </h5>
           <h1 class="fw-bold mb-4">{{ select_data.p_name }}</h1>
           <h4 class="fw-bold mb-4">NT. {{ select_data.p_price }}</h4>
@@ -166,10 +213,10 @@ function add_product_to_Cart(product) {
               <TabPanel value="0">
                 <div class="d-flex flex-column align-items-center">
                   <img
-                    v-for="(pic, index) in select_data.p_other_pics"
+                    v-for="(pic, index) in other_pics"
                     :key="index"
                     class="mb-3"
-                    :src="pic"
+                    :src="pic.p_other_pics"
                     alt="pic"
                     width="70%"
                   />

@@ -2,13 +2,11 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import Loading from "@/components/Loading.vue";
-import { storeToRefs } from "pinia";
 import { gun_shop } from "@/stores/usePinia.js";
 
 axios.defaults.baseURL = "http://apachema.mahorsedomain.online/";
 
 const gunshop = gun_shop();
-const { x } = storeToRefs(gunshop);
 
 const result = ref();
 const loadingStatus = ref(false);
@@ -40,5 +38,3 @@ async function get_son_kind_name() {
   </template>
 </template>
 <style></style>
-
-<!--  -->

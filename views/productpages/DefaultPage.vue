@@ -65,7 +65,7 @@ const { data } = await useFetch(
   "https://apachema.mahorsedomain.online/api/get_products",
   { method: "Post", query: { p_class: get_route.params.message } }
 );
-console.log(data.value);
+
 show_datas.value = data.value;
 </script>
 
@@ -117,7 +117,7 @@ show_datas.value = data.value;
           <div class="product w-100 h-100">
             <div class="new-tag">新品上市</div>
             <NuxtLink
-              :to="`/${get_route.params.message}/${data.p_id}`"
+              :to="`/${get_route.params.message}/${data.id}`"
               class="product-pic w-100"
             >
               <img :src="data.p_pic" alt="product_pic" class="pic w-100" />

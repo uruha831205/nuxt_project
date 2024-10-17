@@ -1,13 +1,12 @@
 <script setup>
 import { ref } from "vue";
-import axios from "axios";
-axios.defaults.baseURL = "http://apachema.mahorsedomain.online/";
 import Loading from "@/components/Loading.vue";
 
 const result = ref();
 const loadingStatus = ref(false);
 
 const class_picked = ref();
+const id = ref();
 const name = ref();
 const brand_name = ref();
 const kind_name = ref();
@@ -19,8 +18,7 @@ const new_date = ref();
 const other_pics = ref([""]);
 const describtion = ref();
 
-async function test_insert() {
-  startLoading();
+/*async function test_insert() {
   const status = await axios.post("/api/test_post_api", {
     p_class: class_picked.value,
     p_name: name.value,
@@ -36,6 +34,23 @@ async function test_insert() {
   });
 
   result.value = status;
+}*/
+
+async function test_insert() {
+  const rtn_data = await $fetch(
+    "https://apachema.mahorsedomain.online/api/insert_other_pics",
+    {
+      method: "Post",
+      body: {
+        p_id: id.value,
+        p_other_pics: other_pics.value,
+      },
+    }
+  );
+  console.log(rtn_data);
+  if (rtn_data == 200) alert("insert success!!");
+
+  result.value = rtn_data;
 }
 
 function addInput() {
@@ -48,16 +63,13 @@ function reduceInput(index) {
 
 function startLoading() {
   loadingStatus.value = !loadingStatus.value;
-  setTimeout(() => {
-    loadingStatus.value = !loadingStatus.value;
-  }, 2000);
 }
 </script>
 <template>
   <Loading v-model:loadingStatus="loadingStatus"></Loading>
   <main class="m-1">
     <div>this is insert data page!</div>
-    <div>
+    <!-- <div>
       <label class="me-1">類型 =></label>
       <input type="radio" id="real" value="real" v-model="class_picked" />
       <label for="real" class="mx-2">real</label>
@@ -95,6 +107,11 @@ function startLoading() {
     <div>
       <label>新進時間 =></label>
       <input type="date" v-model="new_date" />
+    </div> -->
+
+    <div>
+      <label>ID =></label>
+      <input type="text" v-model="id" />
     </div>
 
     <div>
@@ -119,14 +136,12 @@ function startLoading() {
     </div>
     <div>{{ other_pics }}</div>
 
-    <div>
+    <!-- <div>
       <label>描述 =></label>
       <textarea v-model="describtion" />
-    </div>
+    </div> -->
 
     <button @click="test_insert">insert data</button>
-    <button @click="startLoading">start loading</button>
-    <button @click="get_kind_name">get_kind_name</button>
     <div>{{ result }}</div>
   </main>
 
