@@ -342,7 +342,7 @@ export const gun_shop = defineStore("gun_shop", () => {
   //False : 加入一筆全新的商品資料
   const set_products = (join_product) => {
     const find_product = all_ShoppingCart_products.value.find(
-      (product_in_cart) => product_in_cart.product.p_id === join_product.p_id
+      (product_in_cart) => product_in_cart.product.id === join_product.id
     );
     if (find_product === undefined) {
       all_ShoppingCart_products.value.push({
@@ -351,7 +351,7 @@ export const gun_shop = defineStore("gun_shop", () => {
       });
     } else {
       const index = all_ShoppingCart_products.value.findIndex(
-        (item) => item.product.p_id === join_product.p_id
+        (item) => item.product.id === join_product.id
       );
       //限制增加最大數量 : 10
       if (all_ShoppingCart_products.value[index].quantity < 10) {
@@ -369,29 +369,9 @@ export const gun_shop = defineStore("gun_shop", () => {
     return data;
   }
 
-  //   // 從資料庫撈資料
-  //   const get_kindName_fromDB = async () => {
-  //     return await axios.get("api/get_kind_name");
-  //   };
-
-  //   const get_son_kindName_fromDB = async (kinds) => {
-  //     const son_kind_array = ref([]);
-
-  //     const promises = kinds.map(async (kind) => {
-  //       const data = await axios.post("api/get_son_kind_name", { p_kind: kind });
-  //       return data.data; // 返回每個請求的結果
-  //     });
-
-  //     // 等待所有請求完成後，再將結果放入 son_kind_array
-  //     son_kind_array.value = await Promise.all(promises);
-  //     return son_kind_array;
-  //   };
-
   return {
     all_ShoppingCart_products,
     add_products,
-    // get_kindName_fromDB,
-    // get_son_kindName_fromDB,
     get_class_data,
     guns,
     parts,
