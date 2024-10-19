@@ -1,13 +1,8 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, watch } from "vue";
-import { storeToRefs } from "pinia";
-import { gun_shop } from "@/stores/usePinia.js";
 import Selectbar from "@/components/SelectBar.vue";
 const get_router = useRouter();
-const get_route = useRoute();
-const gunshop = gun_shop();
-const { guns, parts, components, equipments } = storeToRefs(gunshop);
 
 //const show_products = [guns, parts, components, equipments];
 //const select_bar_name = ["長槍短槍", "內部零件", "外部配件", "人身裝備"];
@@ -24,17 +19,17 @@ get_kind_name.value = get_kind_name_DB.data.value.map(
   (item) => item.p_kind_name
 );
 
-//取得selectName;
+//取得selectName
 const get_son_kind_name_DB = get_kind_name.value.map(async (kind) => {
-  const data = await useFetch(
+  const { data } = await useFetch(
     "https://apachema.mahorsedomain.online/api/get_son_kind_name",
     {
       method: "POST",
       query: { p_kind: kind },
     }
   );
-  data.data = data.data.value.map((item) => item.p_son_kind_name);
-  return data.data;
+  data.value = data.value.map((item) => item.p_son_kind_name);
+  return data.value;
 });
 
 get_son_kind_name.value = await Promise.all(get_son_kind_name_DB);

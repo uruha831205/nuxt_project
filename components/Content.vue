@@ -1,7 +1,7 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { gun_shop } from "@/stores/usePinia.js";
-import { ref, shallowRef, watch } from "vue";
+import { ref, shallowRef, watch, onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
 const get_route = useRoute();
 
@@ -15,7 +15,6 @@ const gunShop = gun_shop();
 const { all_ShoppingCart_products } = storeToRefs(gunShop);
 
 const siderSelected = ref([[], [], [], []]);
-const search_detailed_items = ref();
 const show_items = ref();
 const loadingStatus = ref(false);
 
@@ -32,7 +31,7 @@ async function serachByName(name) {
     "https://apachema.mahorsedomain.online/api/get_products_by_name",
     {
       method: "POST",
-      query: { p_class: get_route.params.message, p_name: name },
+      body: { p_class: get_route.params.message, p_name: name },
     }
   );
   show_items.value = data.value;
@@ -43,23 +42,20 @@ async function serachByKind(kind) {
     "https://apachema.mahorsedomain.online/api/get_products_by_kind",
     {
       method: "POST",
-      query: { p_class: get_route.params.message, p_kind: kind },
+      body: { p_class: get_route.params.message, p_kind: kind },
     }
   );
   show_items.value = data.value;
 }
 
 async function serachByDetailed() {
-  loadingStatus.value = !loadingStatus.value;
   if (siderSelected.value.every((innerArray) => innerArray.length === 0)) {
     checkToSearch();
-    loadingStatus.value = !loadingStatus.value;
     return;
   }
 
-  search_detailed_items.value = []; //觀測用
-  const rtn_data = await $fetch(
-    "https://apachema.mahorsedomain.online/api/test_check",
+  const { data } = await useFetch(
+    "https://apachema.mahorsedomain.online/api/get_products_by_detailed",
     {
       method: "Post",
       body: {
@@ -68,9 +64,7 @@ async function serachByDetailed() {
       },
     }
   );
-  search_detailed_items.value = rtn_data;
-  show_items.value = rtn_data;
-  loadingStatus.value = !loadingStatus.value;
+  show_items.value = data.value;
 }
 
 function checkToSearch() {
@@ -112,13 +106,13 @@ watch(
   }
 );
 
-//BUG?
 watch(siderSelected, () => {
   serachByDetailed();
 });
 
 checkToSearch();
 split_sideBar_data();
+serachByDetailed();
 </script>
 
 <template>

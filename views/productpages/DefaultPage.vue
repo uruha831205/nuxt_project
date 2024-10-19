@@ -9,15 +9,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-import { storeToRefs } from "pinia";
-import { gun_shop } from "@/stores/usePinia.js";
-
 //取得路由資料
 const get_route = useRoute();
-
-//取得 pinia資料
-const gunshop = gun_shop();
-const { airsoft_datas, real_datas } = storeToRefs(gunshop);
 
 const real = [
   "/img/real_new/real_new_1.jpg",
@@ -34,6 +27,8 @@ const airsoft = [
 const currentIndex = ref(0);
 const currentList = ref([]);
 
+const show_datas = ref([]);
+
 const onSlideChange = (swiper) => {
   currentIndex.value = swiper.realIndex;
   if (currentList.value.length <= swiper.slides.length) {
@@ -49,17 +44,6 @@ const choose = computed(() => {
   }
   return null;
 });
-
-// const show_datas = computed(() => {
-//   if (get_route.params.message == "airsoft") {
-//     return airsoft_datas.value;
-//   } else if (get_route.params.message == "real") {
-//     return real_datas.value;
-//   }
-//   return null;
-// });
-
-const show_datas = ref([]);
 
 const { data } = await useFetch(
   "https://apachema.mahorsedomain.online/api/get_products",
