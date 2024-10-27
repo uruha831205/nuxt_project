@@ -21,6 +21,7 @@ get_kind_name.value = get_kind_name_DB.data.value.map(
 
 //取得selectName
 const get_son_kind_name_DB = get_kind_name.value.map(async (kind) => {
+  let select_data;
   const { data } = await useFetch(
     "https://apachema.mahorsedomain.online/api/get_son_kind_name",
     {
@@ -28,8 +29,8 @@ const get_son_kind_name_DB = get_kind_name.value.map(async (kind) => {
       query: { p_kind: kind },
     }
   );
-  data.value = data.value.map((item) => item.p_son_kind_name);
-  return data.value;
+  select_data = data.value.map((item) => item.p_son_kind_name);
+  return select_data;
 });
 
 get_son_kind_name.value = await Promise.all(get_son_kind_name_DB);

@@ -3,10 +3,22 @@ import { onMounted, triggerRef } from "vue";
 import { storeToRefs } from "pinia";
 import { gun_shop } from "@/stores/usePinia.js";
 
-const props = defineProps(["setBackColorGray"]);
+const get_router = useRouter();
+const props = defineProps(["setBackColorGray", "position"]);
+const isOpen = defineModel();
+const left = ref();
+const right = ref();
 
 const gunshop = gun_shop();
 const { all_ShoppingCart_products } = storeToRefs(gunshop);
+
+if (props.position == "left") {
+  left.value = true;
+  right.value = false;
+} else if (props.position == "right") {
+  left.value = false;
+  right.value = true;
+}
 
 function clear_ShoppingCart() {
   all_ShoppingCart_products.value = [];
@@ -49,11 +61,29 @@ function save_all_ShoppingCart_products_in_localStorage() {
     JSON.stringify(all_ShoppingCart_products.value)
   );
 }
+
+function go_to_orderpage() {
+  get_router.push({
+    name: "testorderpage",
+  });
+  toogleShoppingCart();
+}
+
+function toogleShoppingCart() {
+  isOpen.value = !isOpen.value;
+}
 </script>
 
 <template>
-  <!-- :class="{ 'bg-secondary': props.setBackColorGray }" -->
-  <div class="layout" :class="{ 'bg-secondary': props.setBackColorGray }">
+  <div
+    class="layout shopping-cart"
+    :class="{
+      'bg-secondary': props.setBackColorGray,
+      'shopping-cart-left': left,
+      'shopping-cart-right': right,
+      show: isOpen,
+    }"
+  >
     <div class="overflow-auto" style="scrollbar-width: thin">
       <div v-if="all_ShoppingCart_products.length == 0">目前是空的</div>
       <div
@@ -115,9 +145,18 @@ function save_all_ShoppingCart_products_in_localStorage() {
       >
         清空商品
       </button>
-      <button class="w-100 p-2 shoppingCartList-btn">前往結帳</button>
+      <button class="w-100 p-2 shoppingCartList-btn" @click="go_to_orderpage">
+        前往結帳
+      </button>
     </div>
   </div>
+
+  <!-- 黑背景 -->
+  <div
+    class="shoppingCart-overlay"
+    :class="[{ show: isOpen }]"
+    @click.stop="toogleShoppingCart"
+  ></div>
 </template>
 <style>
 .layout {
@@ -125,6 +164,30 @@ function save_all_ShoppingCart_products_in_localStorage() {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.shopping-cart {
+  width: clamp(350px, 25%, 500px);
+  position: fixed;
+  top: 0%;
+  height: 100vh;
+  transition: 0.4s;
+  z-index: 1041;
+}
+
+.shopping-cart-left {
+  left: -100%;
+}
+
+.shopping-cart-left.show {
+  left: 0;
+}
+
+.shopping-cart-right {
+  right: -100%;
+}
+.shopping-cart-right.show {
+  right: 0;
 }
 
 .shoppingCartPorduct-btn {
@@ -150,5 +213,22 @@ function save_all_ShoppingCart_products_in_localStorage() {
   width: 80%;
   user-select: none;
   cursor: pointer;
+}
+
+.shoppingCart-overlay {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  opacity: 0;
+  z-index: 1040;
+  transition: 0.3s;
+}
+
+.shoppingCart-overlay.show {
+  visibility: visible;
+  opacity: 0.5;
 }
 </style>

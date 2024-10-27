@@ -4,6 +4,7 @@ import Loading from "~/components/Loading.vue";
 
 import { storeToRefs } from "pinia";
 import { gun_shop } from "@/stores/usePinia.js";
+import { right } from "@popperjs/core";
 const gunshop = gun_shop();
 const { all_ShoppingCart_products } = storeToRefs(gunshop);
 
@@ -101,6 +102,7 @@ onMounted(() => {
         </form>
 
         <div class="d-flex align-items-center">
+          <!-- 主題燈按鈕 -->
           <button
             @click="toggleDarkMode()"
             class="me-4 fs-5 theme-btn d-flex align-items-center justify-content-center"
@@ -113,6 +115,7 @@ onMounted(() => {
             </template>
           </button>
 
+          <!-- 購物車按鈕 -->
           <div class="d-flex" style="position: relative">
             <!-- <NuxtLink
               :to="`/${route_name}/member`"
@@ -263,36 +266,11 @@ onMounted(() => {
       </div>
     </section>
 
-    <div class="shopping-cart-list" :class="[{ show: isOpen }]">
-      <ShoppingCartList :setBackColorGray="true"></ShoppingCartList>
-    </div>
-
-    <div>
-      <!-- PC & Mobile 皆會用 -->
-      <div
-        class="shoppingCart-mobile-overlay"
-        :class="[{ show: isOpen }]"
-        @click.stop="toogleShoppingCart"
-      ></div>
-      <div class="shoppingCart-mobile h-100" :class="[{ show: isOpen }]">
-        <ShoppingCartList
-          :setBackColorGray="true"
-          @click.stop
-        ></ShoppingCartList>
-      </div>
-    </div>
-
-    <div class="member_shoppingCart_btn-mobile text-center fw-bold fs-5">
-      <NuxtLink
-        :to="`/${route_name}/member`"
-        class="w-100 p-2 border-2 border-end border-dark text-dark text-decoration-none bg-gradient"
-        >會員中心</NuxtLink
-      >
-
-      <div class="w-100 p-2 bg-gradient" @click.stop="toogleShoppingCart">
-        購物車
-      </div>
-    </div>
+    <ShoppingCartList
+      v-model="isOpen"
+      position="right"
+      :setBackColorGray="true"
+    ></ShoppingCartList>
   </div>
 </template>
 
@@ -408,47 +386,6 @@ footer {
 
 .theme-btn:hover {
   background-color: var(--theme-btn-hover-color);
-}
-
-.shoppingCart-mobile {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: -100%;
-  width: 80%;
-  height: 100%;
-  transition: 0.3s;
-  z-index: 1041;
-}
-
-.shoppingCart-mobile.show {
-  left: 0;
-}
-
-.shoppingCart-mobile-overlay {
-  visibility: hidden;
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: black;
-  opacity: 0;
-  z-index: 1040;
-  transition: 0.3s;
-}
-
-.shoppingCart-mobile-overlay.show {
-  visibility: visible;
-  opacity: 0.5;
-}
-
-.member_shoppingCart_btn-mobile {
-  display: none;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  background-color: gray;
-  z-index: 9;
 }
 
 .logo {
@@ -606,21 +543,6 @@ footer {
   margin-bottom: 1rem;
 }
 
-.shopping-cart-list {
-  width: clamp(350px, 25%, 500px);
-  position: fixed;
-  top: 0%;
-  right: -100%;
-  color: black;
-  height: 100vh;
-  transition: 0.4s;
-  z-index: 1041;
-}
-
-.shopping-cart-list.show {
-  right: 0;
-}
-
 footer {
   padding: 5.4rem;
 }
@@ -654,10 +576,6 @@ footer {
 
   .shopping-cart,
   .shopping-cart-list {
-    display: none;
-  }
-
-  .member_shoppingCart_btn-mobile {
     display: none;
   }
 }

@@ -133,17 +133,6 @@ show_datas.value = data.value;
   }
 }
 
-/*
-@media (prefers-color-scheme: dark) {
-  .product {
-    background-color: #333;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-}
-*/
-
 .product {
   background-color: #ffffff;
 }

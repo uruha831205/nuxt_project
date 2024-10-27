@@ -73,6 +73,26 @@ export default {
           name: "search_product",
           component: () => import("../views/productpages/ShowProductPage.vue"),
         },
+        {
+          path: "testorderpage",
+          name: "testorderpage",
+          component: () => import("../views/TestOrderPage.vue"),
+        },
+        {
+          path: "testordercreate",
+          name: "testordercreate",
+          component: () => import("../views/TestOrderCreate.vue"),
+        },
+        {
+          path: "testorderresult",
+          name: "testorderresult",
+          component: () => import("../views/TestOrderResult.vue"),
+        },
+        {
+          path: "orderpage",
+          name: "orderpage",
+          component: () => import("../views/OrderPage.vue"),
+        },
       ],
     },
     {
