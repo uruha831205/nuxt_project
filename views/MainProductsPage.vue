@@ -116,7 +116,10 @@ onMounted(() => {
           </button>
 
           <!-- 購物車按鈕 -->
-          <div class="d-flex" style="position: relative">
+          <div
+            style="position: relative; cursor: pointer"
+            @click.stop="toogleShoppingCart"
+          >
             <!-- <NuxtLink
               :to="`/${route_name}/member`"
               class="fw-bloder fs-2 text-black me-4 member"
@@ -124,20 +127,10 @@ onMounted(() => {
             ></NuxtLink> -->
             <span
               v-if="all_ShoppingCart_products.length > 0"
-              class="bg-danger rounded"
-              style="
-                position: absolute;
-                top: 15%;
-                right: -10%;
-                width: 0.8rem;
-                height: 0.8rem;
-              "
-            ></span>
-            <i
-              class="bi bi-cart fs-2 member"
-              style="cursor: pointer"
-              @click.stop="toogleShoppingCart"
-            ></i>
+              class="rounded-circle shoppingCartButton"
+              >{{ all_ShoppingCart_products.length }}</span
+            >
+            <i class="bi bi-cart fs-2 member"></i>
           </div>
         </div>
       </div>
@@ -183,7 +176,8 @@ onMounted(() => {
       </div>
     </nav>
 
-    <div class="NuxtPage-area" style="flex: 1">
+    <!-- 切換內容 -->
+    <div class="NuxtPage-area" style="display: flex; flex: 1">
       <NuxtPage></NuxtPage>
     </div>
 
@@ -247,21 +241,15 @@ onMounted(() => {
         <i class="bi bi-arrow-bar-up text-black"></i>
       </div>
       <div
-        class="toolButton shoppingCartButton"
+        class="toolButton"
         style="position: relative"
         @click="toogleShoppingCart"
       >
         <span
           v-if="all_ShoppingCart_products.length > 0"
-          class="bg-danger rounded"
-          style="
-            position: absolute;
-            top: 0%;
-            right: 0%;
-            width: 0.8rem;
-            height: 0.8rem;
-          "
-        ></span>
+          class="rounded-circle shoppingCartButton"
+          >{{ all_ShoppingCart_products.length }}</span
+        >
         <i class="bi bi-cart text-black"></i>
       </div>
     </section>
@@ -537,6 +525,20 @@ footer {
   box-shadow: 0 0 6px black;
   user-select: none;
   cursor: pointer;
+}
+
+.shoppingCartButton {
+  background-color: rgb(255, 0, 0);
+  display: flex;
+  justify-content: center;
+
+  position: absolute;
+  top: 0%;
+  right: -20%;
+  width: 1.2rem;
+  height: 1.2rem;
+  font-size: 0.9rem;
+  font-weight: bold;
 }
 
 .toolButton:not(:nth-last-child(1)) {

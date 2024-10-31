@@ -31,7 +31,7 @@ function reduce_quantuty(product) {
   } else if (product.quantity == 1) {
     let answer = confirm("是否確認移除商品?");
     if (answer) {
-      cancel_product(product.product.p_id);
+      cancel_product(product.id);
     }
   }
   triggerRef(all_ShoppingCart_products);
@@ -48,7 +48,7 @@ function add_quantuty(product) {
 
 function cancel_product(Index) {
   const index = all_ShoppingCart_products.value.findIndex(
-    (item) => item.product.p_id == Index
+    (product_in_cart) => product_in_cart.id == Index
   );
   all_ShoppingCart_products.value.splice(index, 1);
   triggerRef(all_ShoppingCart_products);
@@ -92,7 +92,7 @@ function toogleShoppingCart() {
         class="row mb-1 align-items-center m-0"
       >
         <img
-          :src="product.product.p_pic"
+          :src="product.p_pic"
           alt=""
           class="col-4 col-sm-3 p-1"
           height="90rem"
@@ -103,11 +103,11 @@ function toogleShoppingCart() {
           style="height: 100px"
         >
           <div class="col-12 fw-bold">
-            {{ product.product.p_name }}
+            {{ product.p_name }}
           </div>
           <div class="row">
             <div class="col-5 col-sm-5 fw-bold">
-              ${{ product.product.p_price * product.quantity }}
+              ${{ product.p_price * product.quantity }}
             </div>
             <div class="col-7 col-sm-7 d-flex justify-content-around">
               <button

@@ -328,7 +328,7 @@ export const gun_shop = defineStore("gun_shop", () => {
 
   //購物車內的商品
   //all_ShoppingCart_products 內的基礎變數: 型別 => { product: object, quantity: int }
-  const all_ShoppingCart_products = shallowRef([]);
+  const all_ShoppingCart_products = ref([]);
 
   //增加商品至購物車
   const add_products = (product) => {
@@ -342,16 +342,16 @@ export const gun_shop = defineStore("gun_shop", () => {
   //False : 加入一筆全新的商品資料
   const set_products = (join_product) => {
     const find_product = all_ShoppingCart_products.value.find(
-      (product_in_cart) => product_in_cart.product.id === join_product.id
+      (product_in_cart) => product_in_cart.id === join_product.id
     );
     if (find_product === undefined) {
       all_ShoppingCart_products.value.push({
-        product: join_product,
+        ...join_product,
         quantity: 1,
       });
     } else {
       const index = all_ShoppingCart_products.value.findIndex(
-        (item) => item.product.id === join_product.id
+        (item) => item.id === join_product.id
       );
       //限制增加最大數量 : 10
       if (all_ShoppingCart_products.value[index].quantity < 10) {

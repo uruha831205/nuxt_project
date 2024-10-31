@@ -134,7 +134,7 @@ serachByDetailed();
             />
           </NuxtLink>
 
-          <div class="product-info p-3">
+          <div class="product-info p-2">
             <div
               class="product-name fs-5 fw-bold d-flex justify-content-between align-items-center"
             >

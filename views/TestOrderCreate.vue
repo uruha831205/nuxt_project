@@ -1,6 +1,5 @@
 <script setup>
 import { storeToRefs } from "pinia";
-
 const gunshop = gun_shop();
 const { all_ShoppingCart_products } = storeToRefs(gunshop);
 
@@ -16,15 +15,15 @@ async function get_data() {
 
 watch(
   () => all_ShoppingCart_products.value,
-  (newValue) => {
-    if (newValue && newValue.length > 0) {
-      get_data();
+  async (newValue) => {
+    if (newValue.length > 0) {
+      await get_data();
       get_router.push({
         name: "testorderresult",
       });
     }
-  }
-  //{ immediate: true } // 立即觸發監聽
+  },
+  { immediate: true, deep: true } // 立即觸發監聽
 );
 </script>
 <template>

@@ -12,12 +12,11 @@ const get_son_kind_name = ref([]);
 const siderSelected = ref([[], [], [], []]);
 
 //取得titleName
-const get_kind_name_DB = await useFetch(
+const { data: get_kind_name_DB } = await useFetch(
   "https://apachema.mahorsedomain.online/api/get_kind_name"
 );
-get_kind_name.value = get_kind_name_DB.data.value.map(
-  (item) => item.p_kind_name
-);
+
+get_kind_name.value = get_kind_name_DB.value.map((item) => item.p_kind_name);
 
 //取得selectName
 const get_son_kind_name_DB = get_kind_name.value.map(async (kind) => {
