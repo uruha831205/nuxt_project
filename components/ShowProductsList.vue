@@ -11,20 +11,18 @@ Props.showProducts.forEach((product) => {
   <table>
     <thead>
       <tr class="row p-2">
-        <th class="col-6 ps-4 fs-5" colspan="2">商品</th>
-        <th class="col-2 fs-5">商品單價</th>
-        <th class="col-2 fs-5">商品數量</th>
-        <th class="col-2 fs-5">商品總價</th>
+        <th class="col-8 ps-4" colspan="2">商品</th>
+        <th class="col-2">數量</th>
+        <th class="col-2">總價</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr v-for="product in Props.showProducts" class="row p-2">
-        <td class="col-2">
+      <tr v-for="product in Props.showProducts" class="row p-3">
+        <td class="col-3">
           <img :src="product.p_pic" alt="商品圖" class="w-100 h-100" />
         </td>
-        <td class="col-4">{{ product.name }}</td>
-        <td class="col-2">{{ product.price }}</td>
+        <td class="col-5">{{ product.name }}</td>
         <td class="col-2">{{ product.quantity }}</td>
         <td class="col-2">
           {{ product.quantity * product.price }}

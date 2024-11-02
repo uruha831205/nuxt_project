@@ -89,7 +89,7 @@ function toogleShoppingCart() {
       <div
         v-for="(product, index) in all_ShoppingCart_products"
         :key="index"
-        class="row mb-1 align-items-center m-0"
+        class="row mb-1 align-items-center m-1"
       >
         <img
           :src="product.p_pic"

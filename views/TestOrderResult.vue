@@ -7,6 +7,7 @@ const { all_ShoppingCart_products } = storeToRefs(gunshop);
 function clean_all_ShoppingCart_products() {
   all_ShoppingCart_products.value = [];
 }
+
 function save_all_ShoppingCart_products_in_localStorage() {
   localStorage.setItem(
     "all_shopping_cart_products",
@@ -49,11 +50,11 @@ onMounted(() => {
       <ShowProductsList :showProducts="useFetchResutl"></ShowProductsList>
     </div>
 
-    <div class="mt-3 d-flex justify-content-center">
+    <!-- <div class="mt-3 d-flex justify-content-center">
       <NuxtLink :to="{ name: 'default' }" class="btn btn-secondary"
         >返回首頁</NuxtLink
       >
-    </div>
+    </div> -->
   </div>
 </template>
 

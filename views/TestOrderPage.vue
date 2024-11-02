@@ -60,59 +60,60 @@ watch(
   }
 );
 </script>
+
 <template>
-  <div style="background-color: rgb(230, 230, 230); flex: 1" class="py-3">
-    <main class="container">
-      <table class="w-100 mb-2">
-        <thead class="bg-white">
+  <div style="flex: 1" class="py-3 px-3">
+    <main class="container-xxl container-xl container-lg container-md">
+      <table class="w-100 mb-2 d-none d-lg-table">
+        <thead class="">
           <tr class="row p-2">
             <th class="col-6 ps-4 fs-5" colspan="2">商品</th>
-            <th class="col-1 text-center fs-5">商品單價</th>
-            <th class="col-2 text-center fs-5">商品數量</th>
-            <th class="col-1 text-center fs-5">商品總價</th>
-            <th class="col-2 text-center fs-5">商品操作</th>
+            <th class="col-1 text-center fs-5">單價</th>
+            <th class="col-2 text-center fs-5">數量</th>
+            <th class="col-1 text-center fs-5">總價</th>
+            <th class="col-2 text-center fs-5"></th>
           </tr>
         </thead>
       </table>
 
-      <table class="mb-2">
-        <tbody class="bg-white">
+      <table class="w-100 mb-2 table table-striped">
+        <tbody>
           <tr
             v-for="(product, index) in all_ShoppingCart_products"
             :key="index"
-            class="row p-2"
+            class="row"
           >
-            <td class="col-1 text-center">
+            <td class="col-4 col-lg-2 text-center order-0 order-lg-0">
               <img :src="product.p_pic" alt="商品圖" class="w-100 h-100" />
             </td>
             <td
-              class="col-5 text-center fw-bold d-flex align-items-center justify-content-center"
+              class="col-6 col-lg-4 text-center fw-bold d-flex align-items-center justify-content-lg-center order-1 order-lg-1"
             >
               {{ product.p_name }}
             </td>
             <td
-              class="col-1 text-center fw-bold d-flex align-items-center justify-content-center"
+              class="col-6 col-lg-1 text--center fw-bold d-flex align-items-center justify-content-start justify-content-lg-center order-4 order-lg-2 ps-5 ps-lg-0"
             >
               {{ product.p_price }}
             </td>
             <td
-              class="col-2 text-center fw-bold d-flex align-items-center justify-content-evenly"
+              class="col-12 col-lg-2 text-center fw-bold d-flex align-items-center justify-content-evenly order-3 order-lg-3"
             >
               <span class="quantity-btn fs-4" @click="reduce_quantuty(product)"
                 >-</span
               >
-              {{ product.quantity }}
+              <div>{{ product.quantity }}</div>
               <span class="quantity-btn fs-4" @click="add_quantuty(product)"
                 >+</span
               >
             </td>
             <td
-              class="col-1 text-center fw-bold d-flex align-items-center justify-content-center"
+              class="col-6 col-lg-1 text-center fw-bold d-flex align-items-center justify-content-end justify-content-lg-center order-5 order-lg-4 pe-5 pe-lg-0"
             >
               {{ product.quantity * product.p_price }}
             </td>
             <td
-              class="col-2 fs-5 d-flex align-items-center justify-content-center"
+              class="col-2 col-lg-2 fs-5 d-flex align-items-center justify-content-center order-2 order-lg-5"
               style="cursor: pointer"
               @click="cancel_product(product.id)"
             >
@@ -123,7 +124,7 @@ watch(
       </table>
 
       <table class="w-100">
-        <tfoot class="bg-white border-top">
+        <tfoot>
           <tr>
             <td>
               <form

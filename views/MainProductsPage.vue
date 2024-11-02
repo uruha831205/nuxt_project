@@ -4,7 +4,6 @@ import Loading from "~/components/Loading.vue";
 
 import { storeToRefs } from "pinia";
 import { gun_shop } from "@/stores/usePinia.js";
-import { right } from "@popperjs/core";
 const gunshop = gun_shop();
 const { all_ShoppingCart_products } = storeToRefs(gunshop);
 
@@ -74,7 +73,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <Loading :loadingStatus="loadingstatus"></Loading>
   <div style="display: flex; flex-direction: column; min-height: 100vh">
     <header class="m-0 p-0">
       <div

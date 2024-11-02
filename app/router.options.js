@@ -11,10 +11,10 @@ export default {
       component: () => import("../views/MainProductsPage.vue"),
       beforeEnter: (to, from, next) => {
         const validMessages = ["airsoft", "real"];
-        if (validMessages.includes(to.params.message)) {
-          next();
-        } else {
+        if (!validMessages.includes(to.params.message)) {
           next({ name: "404NotFound" });
+        } else {
+          next();
         }
       },
       children: [
@@ -98,11 +98,6 @@ export default {
     {
       path: "/404",
       name: "404NotFound",
-      component: () => import("../views/404.vue"),
-    },
-    {
-      path: "/:pathMatch(.*)*",
-      name: "404NotFoundAll",
       component: () => import("../views/404.vue"),
     },
   ],

@@ -20,15 +20,21 @@ get_kind_name.value = get_kind_name_DB.value.map((item) => item.p_kind_name);
 
 //取得selectName
 const get_son_kind_name_DB = get_kind_name.value.map(async (kind) => {
+  console.log(kind);
   let select_data;
-  const { data } = await useFetch(
-    "https://apachema.mahorsedomain.online/api/get_son_kind_name",
-    {
-      method: "POST",
-      query: { p_kind: kind },
-    }
-  );
-  select_data = data.value.map((item) => item.p_son_kind_name);
+  try {
+    const { data } = await useFetch(
+      "https://apachema.mahorsedomain.online/api/get_son_kind_name",
+      {
+        method: "POST",
+        query: { p_kind: kind },
+      }
+    );
+    select_data = (data.value || []).map((item) => item.p_son_kind_name);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+
   return select_data;
 });
 
